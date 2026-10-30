@@ -1,0 +1,23 @@
+name: AI LAB sample task check
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 7 * * 1'
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Generate sample report
+        run: python automation/check_tasks.py
+      - name: Upload report artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-lab-task-report
+          path: automation/report.md
+          retention-days: 14
