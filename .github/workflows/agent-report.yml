@@ -1,0 +1,36 @@
+name: AI LAB 2.8 — raport zadania
+on:
+  workflow_dispatch:
+    inputs:
+      task:
+        description: 'Opis zadania (bez danych prywatnych)'
+        required: true
+        type: string
+      category:
+        description: 'Typ analizy'
+        required: true
+        default: 'checklist'
+        type: choice
+        options:
+          - checklist
+          - risk
+          - ecommerce
+permissions:
+  contents: read
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate deterministic report
+        env:
+          AI_LAB_TASK: ${{ inputs.task }}
+          AI_LAB_CATEGORY: ${{ inputs.category }}
+        run: python3 automation/agent_report.py
+      - name: Upload report
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-lab-report
+          path: reports/agent-report.md
+          retention-days: 7
