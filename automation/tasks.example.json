@@ -1,0 +1,11 @@
+{
+  "tasks": [
+    {
+      "id": "example-1",
+      "name": "Przykładowy przegląd projektu",
+      "due": "2026-11-15",
+      "done": false,
+      "priority": "Średni"
+    }
+  ]
+}
